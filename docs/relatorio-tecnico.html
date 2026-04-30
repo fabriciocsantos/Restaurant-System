@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório Técnico - Restaurant System</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 16mm 14mm 16mm 14mm;
+        }
+
+        :root {
+            --text: #1f2937;
+            --muted: #4b5563;
+            --line: #d1d5db;
+            --soft: #f3f4f6;
+            --panel: #f8fafc;
+            --ink: #0f172a;
+            --accent: #2563eb;
+            --accent-soft: #dbeafe;
+            --success: #065f46;
+            --success-soft: #d1fae5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            font-size: 11pt;
+            line-height: 1.5;
+            color: var(--text);
+            background: #ffffff;
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--ink);
+            margin: 0 0 10px;
+        }
+
+        h1 {
+            font-size: 24pt;
+            line-height: 1.15;
+        }
+
+        h2 {
+            font-size: 17pt;
+            border-bottom: 2px solid var(--line);
+            padding-bottom: 6px;
+            margin-top: 28px;
+        }
+
+        h3 {
+            font-size: 13pt;
+            margin-top: 18px;
+        }
+
+        h4 {
+            font-size: 11.5pt;
+            margin-top: 14px;
+        }
+
+        p {
+            margin: 0 0 10px;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin: 8px 0 12px 18px;
+            padding: 0;
+        }
+
+        li {
+            margin: 4px 0;
+        }
+
+        code, pre {
+            font-family: "Courier New", monospace;
+            font-size: 9.4pt;
+        }
+
+        pre {
+            background: #111827;
+            color: #e5e7eb;
+            border-radius: 10px;
+            padding: 12px 14px;
+            white-space: pre-wrap;
+            word-break: break-word;
+            margin: 10px 0 14px;
+            line-height: 1.45;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0 16px;
+            font-size: 10.2pt;
+        }
+
+        th, td {
+            border: 1px solid var(--line);
+            padding: 8px;
+            vertical-align: top;
+        }
+
+        th {
+            background: var(--soft);
+            text-align: left;
+            color: var(--ink);
+        }
+
+        .cover {
+            min-height: 250mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 8mm 0 0;
+        }
+
+        .cover-top {
+            border: 1px solid var(--line);
+            background: linear-gradient(135deg, #eff6ff 0%, #ffffff 55%, #ecfeff 100%);
+            border-radius: 18px;
+            padding: 24px 24px 18px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: var(--accent-soft);
+            color: #1d4ed8;
+            font-size: 9.5pt;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 14px;
+        }
+
+        .lead {
+            font-size: 12pt;
+            color: var(--muted);
+            margin-top: 12px;
+        }
+
+        .cover-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .mini-panel {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .mini-panel h3 {
+            margin-top: 0;
+            font-size: 11pt;
+        }
+
+        .mini-panel ul {
+            margin: 6px 0 0 18px;
+        }
+
+        .cover-footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: flex-end;
+            color: var(--muted);
+            font-size: 10pt;
+            margin-top: 18px;
+        }
+
+        .summary-box, .note, .evidence-box {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 14px 16px;
+            background: var(--panel);
+            margin: 12px 0 16px;
+        }
+
+        .summary-box h3, .note h3, .evidence-box h3 {
+            margin-top: 0;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .figure {
+            margin: 14px 0 16px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: #ffffff;
+            padding: 12px;
+            page-break-inside: avoid;
+        }
+
+        .figure img {
+            width: 100%;
+            display: block;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+        }
+
+        .caption {
+            font-size: 9.6pt;
+            color: var(--muted);
+            margin-top: 8px;
+        }
+
+        .diagram {
+            width: 100%;
+            margin: 12px 0;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: #ffffff;
+            padding: 10px;
+            page-break-inside: avoid;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 999px;
+            font-size: 8.8pt;
+            font-weight: 700;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+
+        .tag-blue { background: #dbeafe; color: #1d4ed8; }
+        .tag-green { background: #d1fae5; color: #065f46; }
+        .tag-yellow { background: #fef3c7; color: #92400e; }
+        .tag-purple { background: #ede9fe; color: #6d28d9; }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        .tight td, .tight th {
+            padding: 6px 7px;
+        }
+
+        .small {
+            font-size: 9.5pt;
+        }
+
+        .checklist td:first-child {
+            width: 32%;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+<section class="cover">
+    <div class="cover-top">
+        <div class="badge">TECH CHALLENGE • RELATÓRIO TÉCNICO</div>
+        <h1>Restaurant System</h1>
+        <p class="lead">
+            Backend em Spring Boot para um sistema compartilhado de gestão de restaurantes,
+            com foco nesta etapa no módulo de usuários, documentação de API, persistência em PostgreSQL
+            e execução orquestrada com Docker Compose.
+        </p>
+
+        <div class="cover-grid">
+            <div class="mini-panel">
+                <h3>Escopo implementado</h3>
+                <ul>
+                    <li>cadastro, atualização e exclusão de usuários</li>
+                    <li>troca de senha em endpoint exclusivo</li>
+                    <li>validação simples de login e senha</li>
+                    <li>busca por nome e filtro por tipo de usuário</li>
+                    <li>tratamento de erros com ProblemDetail</li>
+                </ul>
+            </div>
+            <div class="mini-panel">
+                <h3>Base tecnológica</h3>
+                <ul>
+                    <li>Java 21</li>
+                    <li>Spring Boot 4</li>
+                    <li>Spring Data JPA</li>
+                    <li>PostgreSQL</li>
+                    <li>SpringDoc OpenAPI</li>
+                    <li>Docker Compose</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="cover-footer">
+            <div>
+                <strong>Repositório:</strong><br>
+                https://github.com/fabriciocsantos/Restaurant-System
+            </div>
+            <div>
+                <strong>Artefato oficial:</strong><br>
+                Relatório em PDF
+            </div>
+            <div>
+                <strong>Data de geração:</strong><br>
+                29/04/2026
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="page-break">
+    <h2>Sumário</h2>
+    <ol>
+        <li>Visão geral da aplicação</li>
+        <li>Arquitetura detalhada</li>
+        <li>Modelagem das entidades e relacionamentos</li>
+        <li>Descrição dos endpoints com exemplos de uso</li>
+        <li>Tratamento de erros com ProblemDetail</li>
+        <li>Documentação Swagger / OpenAPI</li>
+        <li>Coleção Postman</li>
+        <li>Estrutura do banco de dados</li>
+        <li>Execução com Docker Compose</li>
+        <li>Checklist de aderência ao entregável</li>
+    </ol>
+
+    <div class="summary-box">
+        <h3>Resumo executivo</h3>
+        <p>
+            O projeto foi estruturado como um backend REST versionado em <code>/api/v1</code>, com separação em camadas,
+            persistência relacional em PostgreSQL, autenticação simples sem Spring Security e documentação operacional
+            tanto por Swagger/OpenAPI quanto por coleção Postman. O relatório foi montado para ser autossuficiente:
+            todas as informações exigidas pelo enunciado estão consolidadas neste PDF.
+        </p>
+    </div>
+</section>
+
+<section>
+    <h2>1. Visão geral da aplicação</h2>
+    <p>
+        O Restaurant System é o backend de um sistema compartilhado de gestão de restaurantes. A ideia central do
+        desafio é permitir que múltiplos estabelecimentos utilizem uma mesma base tecnológica, reduzindo custo de
+        implantação e padronizando os serviços digitais disponibilizados aos usuários finais.
+    </p>
+    <p>
+        Na etapa atual, o escopo implementado está concentrado no domínio de usuários. Foram contemplados os dois tipos
+        obrigatórios do enunciado: <code>CLIENTE</code> e <code>DONO_RESTAURANTE</code>. O sistema já disponibiliza
+        operações de cadastro, consulta, atualização, exclusão, busca por nome, troca de senha em endpoint separado
+        e validação simples de login.
+    </p>
+
+    <table class="checklist">
+        <thead>
+        <tr>
+            <th>Item</th>
+            <th>Como está implementado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Versionamento de API</td>
+            <td>Prefixo de caminho <code>/api/v1</code></td>
+        </tr>
+        <tr>
+            <td>Erros padronizados</td>
+            <td>Uso de <code>ProblemDetail</code> com respostas RFC 7807</td>
+        </tr>
+        <tr>
+            <td>Banco relacional</td>
+            <td>PostgreSQL em execução local e também via Docker Compose</td>
+        </tr>
+        <tr>
+            <td>Documentação de API</td>
+            <td>Swagger UI e OpenAPI JSON expostos pela aplicação</td>
+        </tr>
+        <tr>
+            <td>Coleção de testes</td>
+            <td>Arquivo JSON do Postman com os principais cenários do módulo</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<section>
+    <h2>2. Arquitetura detalhada</h2>
+    <p>
+        A aplicação segue uma arquitetura monolítica em camadas. Esse desenho foi adotado porque o escopo atual ainda
+        é concentrado em um único domínio funcional, e a separação em camadas já fornece clareza suficiente de
+        responsabilidade, testabilidade e evolução incremental do código.
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Camada</th>
+            <th>Responsabilidade</th>
+            <th>Arquivos centrais</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Controller</td>
+            <td>Recebe as requisições HTTP, mapeia rotas, aplica validação de entrada e devolve contratos de API.</td>
+            <td><code>UsuarioController.java</code></td>
+        </tr>
+        <tr>
+            <td>DTO</td>
+            <td>Define contratos de entrada e saída, evitando expor diretamente a entidade persistida.</td>
+            <td><code>UsuarioCriacaoRequest</code>, <code>UsuarioAtualizacaoRequest</code>, <code>UsuarioResponse</code></td>
+        </tr>
+        <tr>
+            <td>Service</td>
+            <td>Centraliza regras de negócio, valida unicidade, autentica usuário e orquestra persistência.</td>
+            <td><code>UsuarioService.java</code></td>
+        </tr>
+        <tr>
+            <td>Repository</td>
+            <td>Executa consultas e persistência com Spring Data JPA.</td>
+            <td><code>UsuarioRepository.java</code></td>
+        </tr>
+        <tr>
+            <td>Model</td>
+            <td>Representa o domínio persistido, constraints estruturais e lifecycle da entidade.</td>
+            <td><code>Usuario.java</code>, <code>Endereco.java</code>, <code>TipoUsuario.java</code></td>
+        </tr>
+        <tr>
+            <td>Common</td>
+            <td>Concentra configurações transversais, segurança criptográfica e tratamento de exceções.</td>
+            <td><code>OpenApiConfig.java</code>, <code>PasswordConfig.java</code>, <code>GlobalExceptionHandler.java</code></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="diagram">
+        <svg viewBox="0 0 1080 430" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#2563eb"></path>
+                </marker>
+            </defs>
+
+            <rect x="24" y="42" width="180" height="86" rx="16" fill="#dbeafe" stroke="#93c5fd" />
+            <text x="114" y="76" text-anchor="middle" font-family="Arial" font-size="21" font-weight="700" fill="#1d4ed8">Cliente HTTP</text>
+            <text x="114" y="103" text-anchor="middle" font-family="Arial" font-size="14" fill="#1e3a8a">Web, Postman, Swagger UI</text>
+
+            <rect x="258" y="42" width="180" height="86" rx="16" fill="#e0f2fe" stroke="#7dd3fc" />
+            <text x="348" y="76" text-anchor="middle" font-family="Arial" font-size="21" font-weight="700" fill="#0c4a6e">Controller</text>
+            <text x="348" y="103" text-anchor="middle" font-family="Arial" font-size="14" fill="#155e75">Rotas, status HTTP, validação</text>
+
+            <rect x="492" y="42" width="180" height="86" rx="16" fill="#dcfce7" stroke="#86efac" />
+            <text x="582" y="76" text-anchor="middle" font-family="Arial" font-size="21" font-weight="700" fill="#166534">Service</text>
+            <text x="582" y="103" text-anchor="middle" font-family="Arial" font-size="14" fill="#166534">Regras de negócio e autenticação</text>
+
+            <rect x="726" y="42" width="180" height="86" rx="16" fill="#ede9fe" stroke="#c4b5fd" />
+            <text x="816" y="76" text-anchor="middle" font-family="Arial" font-size="21" font-weight="700" fill="#6d28d9">Repository</text>
+            <text x="816" y="103" text-anchor="middle" font-family="Arial" font-size="14" fill="#5b21b6">Consultas JPA derivadas</text>
+
+            <rect x="876" y="186" width="180" height="98" rx="16" fill="#fef3c7" stroke="#fcd34d" />
+            <text x="966" y="222" text-anchor="middle" font-family="Arial" font-size="21" font-weight="700" fill="#92400e">PostgreSQL</text>
+            <text x="966" y="248" text-anchor="middle" font-family="Arial" font-size="14" fill="#78350f">Tabela usuarios</text>
+            <text x="966" y="270" text-anchor="middle" font-family="Arial" font-size="14" fill="#78350f">unicidade, constraints e schema.sql</text>
+
+            <rect x="258" y="186" width="250" height="98" rx="16" fill="#f8fafc" stroke="#cbd5e1" />
+            <text x="383" y="220" text-anchor="middle" font-family="Arial" font-size="20" font-weight="700" fill="#0f172a">ProblemDetail</text>
+            <text x="383" y="246" text-anchor="middle" font-family="Arial" font-size="14" fill="#334155">Handler global de exceções</text>
+            <text x="383" y="268" text-anchor="middle" font-family="Arial" font-size="14" fill="#334155">400, 401, 404 e 409 padronizados</text>
+
+            <rect x="540" y="186" width="250" height="98" rx="16" fill="#f8fafc" stroke="#cbd5e1" />
+            <text x="665" y="220" text-anchor="middle" font-family="Arial" font-size="20" font-weight="700" fill="#0f172a">Swagger / OpenAPI</text>
+            <text x="665" y="246" text-anchor="middle" font-family="Arial" font-size="14" fill="#334155">Documentação automática</text>
+            <text x="665" y="268" text-anchor="middle" font-family="Arial" font-size="14" fill="#334155">exemplos de sucesso e erro</text>
+
+            <line x1="204" y1="85" x2="258" y2="85" stroke="#2563eb" stroke-width="3" marker-end="url(#arrow)" />
+            <line x1="438" y1="85" x2="492" y2="85" stroke="#2563eb" stroke-width="3" marker-end="url(#arrow)" />
+            <line x1="672" y1="85" x2="726" y2="85" stroke="#2563eb" stroke-width="3" marker-end="url(#arrow)" />
+            <line x1="816" y1="128" x2="936" y2="186" stroke="#2563eb" stroke-width="3" marker-end="url(#arrow)" />
+
+            <line x1="348" y1="128" x2="383" y2="186" stroke="#64748b" stroke-width="2.6" marker-end="url(#arrow)" />
+            <line x1="582" y1="128" x2="665" y2="186" stroke="#64748b" stroke-width="2.6" marker-end="url(#arrow)" />
+        </svg>
+        <div class="caption">Figura 1. Fluxo principal da requisição: cliente HTTP, API REST, camada de serviço, persistência e componentes transversais.</div>
+    </div>
+
+    <div class="note">
+        <h3>Decisões arquiteturais relevantes</h3>
+        <ul>
+            <li><strong>Versionamento via path:</strong> a API foi padronizada com o prefixo <code>/api/v1</code>.</li>
+            <li><strong>Criptografia de senha:</strong> o projeto usa <code>BCryptPasswordEncoder</code> para armazenar senha em hash.</li>
+            <li><strong>Autenticação simples:</strong> a validação de login foi implementada sem Spring Security, conforme o enunciado.</li>
+            <li><strong>Schema inicial:</strong> o ambiente principal usa <code>schema.sql</code> para criação da estrutura do banco.</li>
+            <li><strong>Tratamento centralizado de erros:</strong> todas as exceções de negócio e validação convergem para <code>GlobalExceptionHandler</code>.</li>
+        </ul>
+    </div>
+</section>
+
+<section class="page-break">
+    <h2>3. Modelagem das entidades e relacionamentos</h2>
+    <p>
+        O modelo atual foi mantido propositalmente enxuto porque a etapa implementada ainda está concentrada no domínio
+        de usuários. Mesmo assim, os elementos já estão estruturados de forma compatível com a expansão futura do sistema.
+    </p>
+
+    <div class="diagram">
+        <svg viewBox="0 0 1080 510" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#475569"></path>
+                </marker>
+            </defs>
+
+            <rect x="54" y="36" width="444" height="354" rx="18" fill="#eff6ff" stroke="#93c5fd" />
+            <text x="276" y="70" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#1d4ed8">Usuario</text>
+            <text x="84" y="110" font-family="Arial" font-size="17" fill="#1e3a8a">id: Long</text>
+            <text x="84" y="140" font-family="Arial" font-size="17" fill="#1e3a8a">nome: String</text>
+            <text x="84" y="170" font-family="Arial" font-size="17" fill="#1e3a8a">email: String (UNIQUE)</text>
+            <text x="84" y="200" font-family="Arial" font-size="17" fill="#1e3a8a">login: String (UNIQUE)</text>
+            <text x="84" y="230" font-family="Arial" font-size="17" fill="#1e3a8a">senha: String (hash BCrypt)</text>
+            <text x="84" y="260" font-family="Arial" font-size="17" fill="#1e3a8a">dataUltimaAlteracao: LocalDateTime</text>
+            <text x="84" y="290" font-family="Arial" font-size="17" fill="#1e3a8a">endereco: Endereco</text>
+            <text x="84" y="320" font-family="Arial" font-size="17" fill="#1e3a8a">tipoUsuario: TipoUsuario</text>
+            <text x="84" y="360" font-family="Arial" font-size="15" fill="#334155">Regras: @PrePersist / @PreUpdate, validação em DTOs e persistência JPA</text>
+
+            <rect x="598" y="56" width="370" height="232" rx="18" fill="#ecfeff" stroke="#67e8f9" />
+            <text x="783" y="90" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#0f766e">Endereco</text>
+            <text x="626" y="130" font-family="Arial" font-size="17" fill="#155e75">rua: String</text>
+            <text x="626" y="160" font-family="Arial" font-size="17" fill="#155e75">numero: String</text>
+            <text x="626" y="190" font-family="Arial" font-size="17" fill="#155e75">complemento: String?</text>
+            <text x="626" y="220" font-family="Arial" font-size="17" fill="#155e75">cidade: String</text>
+            <text x="626" y="250" font-family="Arial" font-size="17" fill="#155e75">cep: String</text>
+
+            <rect x="598" y="324" width="370" height="126" rx="18" fill="#f5f3ff" stroke="#c4b5fd" />
+            <text x="783" y="358" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#6d28d9">TipoUsuario</text>
+            <text x="626" y="398" font-family="Arial" font-size="17" fill="#5b21b6">CLIENTE</text>
+            <text x="626" y="428" font-family="Arial" font-size="17" fill="#5b21b6">DONO_RESTAURANTE</text>
+
+            <line x1="498" y1="252" x2="598" y2="172" stroke="#475569" stroke-width="3" marker-end="url(#arrow2)" />
+            <line x1="498" y1="312" x2="598" y2="380" stroke="#475569" stroke-width="3" marker-end="url(#arrow2)" />
+            <text x="526" y="220" font-family="Arial" font-size="15" fill="#334155">1..1 embutido</text>
+            <text x="522" y="364" font-family="Arial" font-size="15" fill="#334155">1..1 enum</text>
+        </svg>
+        <div class="caption">Figura 2. Modelo de domínio atual do módulo de usuários.</div>
+    </div>
+
+    <h3>3.1 Entidade Usuario</h3>
+    <table class="tight">
+        <thead>
+        <tr>
+            <th>Campo</th>
+            <th>Tipo</th>
+            <th>Obrigatoriedade / regra</th>
+            <th>Observação</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><code>id</code></td>
+            <td>Long</td>
+            <td>Gerado automaticamente</td>
+            <td>Chave primária</td>
+        </tr>
+        <tr>
+            <td><code>nome</code></td>
+            <td>String</td>
+            <td>Obrigatório, até 120 caracteres</td>
+            <td>Validado no DTO de criação e atualização</td>
+        </tr>
+        <tr>
+            <td><code>email</code></td>
+            <td>String</td>
+            <td>Obrigatório, único, formato de e-mail</td>
+            <td>Normalizado em minúsculas e validado na regra de negócio</td>
+        </tr>
+        <tr>
+            <td><code>login</code></td>
+            <td>String</td>
+            <td>Obrigatório, único</td>
+            <td>Usado na autenticação simples</td>
+        </tr>
+        <tr>
+            <td><code>senha</code></td>
+            <td>String</td>
+            <td>Obrigatória</td>
+            <td>Nunca retorna na API; é persistida com hash BCrypt</td>
+        </tr>
+        <tr>
+            <td><code>dataUltimaAlteracao</code></td>
+            <td>LocalDateTime</td>
+            <td>Obrigatório</td>
+            <td>Atualizado automaticamente pela entidade</td>
+        </tr>
+        <tr>
+            <td><code>endereco</code></td>
+            <td>Endereco</td>
+            <td>Obrigatório</td>
+            <td>Persistido como objeto embutido na mesma tabela</td>
+        </tr>
+        <tr>
+            <td><code>tipoUsuario</code></td>
+            <td>Enum</td>
+            <td>Obrigatório</td>
+            <td>Persistido como texto: CLIENTE ou DONO_RESTAURANTE</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>3.2 Objeto Endereco</h3>
+    <p>
+        O endereço foi modelado com <code>@Embeddable</code>. Isso significa que não existe tabela separada para
+        endereço nesta etapa. Os campos de endereço ficam na mesma estrutura da tabela <code>usuarios</code>,
+        simplificando o modelo sem perder expressividade.
+    </p>
+
+    <h3>3.3 Relacionamentos no estado atual</h3>
+    <ul>
+        <li><strong>Usuario → Endereco:</strong> composição 1:1 embutida na mesma tabela.</li>
+        <li><strong>Usuario → TipoUsuario:</strong> associação por enum persistido como texto.</li>
+        <li><strong>Sem relações adicionais nesta fase:</strong> ainda não há entidades de restaurante, cardápio, pedido ou avaliação.</li>
+    </ul>
+</section>
+
+<section class="page-break">
+    <h2>4. Descrição dos endpoints disponíveis</h2>
+    <p>
+        Todos os endpoints do módulo de usuários estão versionados em <code>/api/v1/usuarios</code>.
+        A tabela abaixo resume método, finalidade, contrato principal e erros esperados.
+    </p>
+
+    <table class="tight small">
+        <thead>
+        <tr>
+            <th>Método</th>
+            <th>Endpoint</th>
+            <th>Finalidade</th>
+            <th>Entrada principal</th>
+            <th>Sucesso</th>
+            <th>Erros esperados</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><span class="tag tag-green">POST</span></td>
+            <td><code>/api/v1/usuarios</code></td>
+            <td>Cadastrar usuário</td>
+            <td><code>UsuarioCriacaoRequest</code></td>
+            <td><code>201</code></td>
+            <td><code>400</code>, <code>409</code></td>
+        </tr>
+        <tr>
+            <td><span class="tag tag-green">POST</span></td>
+            <td><code>/api/v1/usuarios/login</code></td>
+            <td>Validar login e senha</td>
+            <td><code>UsuarioLoginRequest</code></td>
+            <td><code>200</code></td>
+            <td><code>400</code>, <code>401</code></td>
+        </tr>
+        <tr>
+            <td><span class="tag tag-blue">GET</span></td>
+            <td><code>/api/v1/usuarios</code></td>
+            <td>Listar usuários e filtrar por nome e tipo</td>
+            <td>Query params opcionais</td>
+            <td><code>200</code></td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td><span class="tag tag-blue">GET</span></td>
+            <td><code>/api/v1/usuarios/{id}</code></td>
+            <td>Buscar usuário por id</td>
+            <td>Path param</td>
+            <td><code>200</code></td>
+            <td><code>404</code></td>
+        </tr>
+        <tr>
+            <td><span class="tag tag-yellow">PUT</span></td>
+            <td><code>/api/v1/usuarios/{id}</code></td>
+            <td>Atualizar dados cadastrais</td>
+            <td><code>UsuarioAtualizacaoRequest</code></td>
+            <td><code>200</code></td>
+            <td><code>400</code>, <code>404</code>, <code>409</code></td>
+        </tr>
+        <tr>
+            <td><span class="tag tag-purple">PATCH</span></td>
+            <td><code>/api/v1/usuarios/{id}/senha</code></td>
+            <td>Trocar senha</td>
+            <td><code>UsuarioSenhaAtualizacaoRequest</code></td>
+            <td><code>204</code></td>
+            <td><code>400</code>, <code>404</code></td>
+        </tr>
+        <tr>
+            <td><span class="tag tag-yellow">DELETE</span></td>
+            <td><code>/api/v1/usuarios/{id}</code></td>
+            <td>Excluir usuário</td>
+            <td>Path param</td>
+            <td><code>204</code></td>
+            <td><code>404</code></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>4.1 Exemplo de cadastro de usuário</h3>
+    <pre>POST /api/v1/usuarios
+Content-Type: application/json
+
+{
+  "nome": "Maria Oliveira",
+  "email": "maria@restaurante.com",
+  "login": "maria.oliveira",
+  "senha": "SenhaSegura123",
+  "tipoUsuario": "DONO_RESTAURANTE",
+  "endereco": {
+    "rua": "Rua das Flores",
+    "numero": "120",
+    "complemento": "Sala 2",
+    "cidade": "Sao Paulo",
+    "cep": "01001-000"
+  }
+}</pre>
+
+    <pre>Resposta 201 Created
+
+{
+  "id": 1,
+  "nome": "Maria Oliveira",
+  "email": "maria@restaurante.com",
+  "login": "maria.oliveira",
+  "dataUltimaAlteracao": "2026-04-29T20:30:00",
+  "endereco": {
+    "rua": "Rua das Flores",
+    "numero": "120",
+    "complemento": "Sala 2",
+    "cidade": "Sao Paulo",
+    "cep": "01001-000"
+  },
+  "tipoUsuario": "DONO_RESTAURANTE"
+}</pre>
+
+    <h3>4.2 Exemplo de tentativa inválida</h3>
+    <pre>POST /api/v1/usuarios
+Content-Type: application/json
+
+{
+  "nome": "",
+  "email": "",
+  "login": "",
+  "senha": "123",
+  "tipoUsuario": null,
+  "endereco": {
+    "rua": "",
+    "numero": "",
+    "cidade": "",
+    "cep": ""
+  }
+}</pre>
+
+    <pre>Resposta 400 Bad Request - application/problem+json
+
+{
+  "type": "about:blank",
+  "title": "Dados invalidos",
+  "status": 400,
+  "detail": "A requisicao possui campos invalidos.",
+  "instance": "/api/v1/usuarios",
+  "errors": {
+    "email": "E-mail invalido"
+  }
+}</pre>
+
+    <h3>4.3 Exemplo de login válido e inválido</h3>
+    <pre>POST /api/v1/usuarios/login
+Content-Type: application/json
+
+{
+  "login": "maria.oliveira",
+  "senha": "SenhaSegura123"
+}</pre>
+
+    <pre>Resposta 200 OK
+
+{
+  "id": 1,
+  "nome": "Maria Oliveira",
+  "email": "maria@restaurante.com",
+  "login": "maria.oliveira",
+  "tipoUsuario": "DONO_RESTAURANTE"
+}</pre>
+
+    <pre>Resposta 401 Unauthorized - application/problem+json
+
+{
+  "type": "about:blank",
+  "title": "Credenciais invalidas",
+  "status": 401,
+  "detail": "Login ou senha invalidos.",
+  "instance": "/api/v1/usuarios/login"
+}</pre>
+
+    <h3>4.4 Exemplo de atualização de dados cadastrais</h3>
+    <pre>PUT /api/v1/usuarios/1
+Content-Type: application/json
+
+{
+  "nome": "Maria Oliveira Atualizada",
+  "email": "maria.atualizada@restaurante.com",
+  "login": "maria.atualizada",
+  "tipoUsuario": "DONO_RESTAURANTE",
+  "endereco": {
+    "rua": "Avenida Central",
+    "numero": "500",
+    "complemento": "Conjunto 10",
+    "cidade": "Sao Paulo",
+    "cep": "04567-000"
+  }
+}</pre>
+
+    <h3>4.5 Exemplo de troca de senha</h3>
+    <pre>PATCH /api/v1/usuarios/1/senha
+Content-Type: application/json
+
+{
+  "novaSenha": "NovaSenha456"
+}</pre>
+
+    <pre>Resposta 204 No Content</pre>
+
+    <h3>4.6 Exemplo de busca por nome</h3>
+    <pre>GET /api/v1/usuarios?nome=Maria</pre>
+</section>
+
+<section>
+    <h2>5. Tratamento de erros com ProblemDetail</h2>
+    <p>
+        A aplicação padroniza respostas de erro com <code>ProblemDetail</code>, seguindo o modelo do RFC 7807.
+        Isso evita respostas ad hoc e facilita o consumo da API tanto por frontend quanto por clientes externos.
+    </p>
+
+    <table class="tight">
+        <thead>
+        <tr>
+            <th>Status</th>
+            <th>Quando ocorre</th>
+            <th>Título retornado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><code>400</code></td>
+            <td>Falha de validação em DTO</td>
+            <td><code>Dados invalidos</code></td>
+        </tr>
+        <tr>
+            <td><code>401</code></td>
+            <td>Login ou senha incorretos</td>
+            <td><code>Credenciais invalidas</code></td>
+        </tr>
+        <tr>
+            <td><code>404</code></td>
+            <td>Usuário não encontrado</td>
+            <td><code>Recurso nao encontrado</code></td>
+        </tr>
+        <tr>
+            <td><code>409</code></td>
+            <td>Violação de regra de negócio ou integridade</td>
+            <td><code>Violacao de regra de negocio</code> ou <code>Violacao de integridade</code></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <pre>Exemplo de estrutura devolvida pela API
+
+{
+  "type": "about:blank",
+  "title": "Violacao de regra de negocio",
+  "status": 409,
+  "detail": "Ja existe um usuario cadastrado com este e-mail.",
+  "instance": "/api/v1/usuarios"
+}</pre>
+</section>
+
+<section class="page-break">
+    <h2>6. Documentação Swagger / OpenAPI</h2>
+    <p>
+        A documentação da API foi implementada com SpringDoc OpenAPI. O recurso possui dois pontos principais:
+        uma interface visual para navegação e testes manuais e um documento JSON estruturado para integração,
+        auditoria e automação.
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Recurso</th>
+            <th>Endereço</th>
+            <th>Uso</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Swagger UI</td>
+            <td><code>http://localhost:8080/swagger-ui.html</code></td>
+            <td>Navegação visual pelas rotas, contratos e respostas</td>
+        </tr>
+        <tr>
+            <td>OpenAPI JSON</td>
+            <td><code>http://localhost:8080/v3/api-docs</code></td>
+            <td>Documento bruto da API em formato OpenAPI 3.1</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="figure">
+        <img src="assets/swagger-ui.png" alt="Captura do Swagger UI">
+        <div class="caption">Figura 3. Captura real do Swagger UI gerada a partir da aplicação em execução local.</div>
+    </div>
+
+    <h3>6.1 Informações documentadas por endpoint</h3>
+    <ul>
+        <li>descrição textual da operação</li>
+        <li>request body tipado</li>
+        <li>exemplos de requisição</li>
+        <li>respostas de sucesso</li>
+        <li>respostas de erro com <code>ProblemDetail</code></li>
+    </ul>
+
+    <h3>6.2 Trecho da configuração OpenAPI</h3>
+    <pre>@Bean
+public OpenAPI restaurantSystemOpenApi() {
+    return new OpenAPI().info(new Info()
+            .title("Restaurant System API")
+            .version("v1")
+            .description("API do sistema compartilhado de gestao de restaurantes."));
+}</pre>
+
+    <h3>6.3 Trecho da saída OpenAPI real</h3>
+    <pre>{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Restaurant System API",
+    "description": "API do sistema compartilhado de gestao de restaurantes.",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/v1/usuarios": {
+      "post": {
+        "summary": "Criar usuario"
+      }
+    },
+    "/api/v1/usuarios/login": {
+      "post": {
+        "responses": {
+          "401": {
+            "description": "Login ou senha invalidos."
+          }
+        }
+      }
+    }
+  }
+}</pre>
+</section>
+
+<section>
+    <h2>7. Coleção Postman</h2>
+    <p>
+        Além do Swagger, o projeto inclui uma coleção Postman em formato JSON para apoiar testes manuais orientados
+        por fluxo. Esse arquivo cobre os cenários principais do módulo de usuários e reduz o esforço de montagem
+        manual das requisições.
+    </p>
+
+    <div class="evidence-box">
+        <h3>Arquivo entregue</h3>
+        <p><code>docs/restaurant-system.postman_collection.json</code></p>
+        <p class="muted">A coleção usa variáveis para base URL, id do usuário e dados gerados dinamicamente.</p>
+    </div>
+
+    <div class="figure">
+        <img src="assets/postman-collection.png" alt="Visualização da coleção Postman">
+        <div class="caption">Figura 4. Visualização consolidada da coleção Postman utilizada no projeto.</div>
+    </div>
+
+    <h3>7.1 Cenários cobertos</h3>
+    <table class="tight">
+        <thead>
+        <tr>
+            <th>Cenário</th>
+            <th>Método / rota</th>
+            <th>Objetivo</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Cadastro de usuário válido</td>
+            <td><code>POST /api/v1/usuarios</code></td>
+            <td>Criar um registro base para os demais testes</td>
+        </tr>
+        <tr>
+            <td>Cadastro inválido por e-mail duplicado</td>
+            <td><code>POST /api/v1/usuarios</code></td>
+            <td>Validar unicidade do e-mail</td>
+        </tr>
+        <tr>
+            <td>Cadastro inválido por campos faltando</td>
+            <td><code>POST /api/v1/usuarios</code></td>
+            <td>Validar obrigatoriedade e formato de dados</td>
+        </tr>
+        <tr>
+            <td>Login com sucesso</td>
+            <td><code>POST /api/v1/usuarios/login</code></td>
+            <td>Validar credenciais corretas</td>
+        </tr>
+        <tr>
+            <td>Login com erro</td>
+            <td><code>POST /api/v1/usuarios/login</code></td>
+            <td>Validar retorno 401 para senha incorreta</td>
+        </tr>
+        <tr>
+            <td>Atualização de dados com sucesso</td>
+            <td><code>PUT /api/v1/usuarios/{id}</code></td>
+            <td>Atualizar dados cadastrais sem envolver senha</td>
+        </tr>
+        <tr>
+            <td>Atualização de dados com erro</td>
+            <td><code>PUT /api/v1/usuarios/{id}</code></td>
+            <td>Validar rejeição de payload inválido</td>
+        </tr>
+        <tr>
+            <td>Busca por nome</td>
+            <td><code>GET /api/v1/usuarios?nome=Maria</code></td>
+            <td>Exercitar filtro por nome</td>
+        </tr>
+        <tr>
+            <td>Troca de senha com sucesso</td>
+            <td><code>PATCH /api/v1/usuarios/{id}/senha</code></td>
+            <td>Validar endpoint exclusivo de senha</td>
+        </tr>
+        <tr>
+            <td>Troca de senha com erro</td>
+            <td><code>PATCH /api/v1/usuarios/{id}/senha</code></td>
+            <td>Validar regra mínima da nova senha</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>7.2 Exemplo de request da coleção</h3>
+    <pre>PATCH {{baseUrl}}/api/v1/usuarios/{{usuarioId}}/senha
+Content-Type: application/json
+
+{
+  "novaSenha": "NovaSenha456"
+}</pre>
+
+    <h3>7.3 Variáveis principais da coleção</h3>
+    <pre>{
+  "baseUrl": "http://localhost:8080",
+  "usuarioId": "",
+  "emailUsuario": "",
+  "emailUsuarioAtualizado": "",
+  "loginUsuario": ""
+}</pre>
+</section>
+
+<section class="page-break">
+    <h2>8. Estrutura do banco de dados</h2>
+    <p>
+        O projeto utiliza PostgreSQL como banco relacional. No ambiente principal, a estrutura é inicializada por
+        <code>src/main/resources/schema.sql</code>. Nos testes automatizados, a aplicação usa PostgreSQL via
+        Testcontainers, com ciclo independente do ambiente principal.
+    </p>
+
+    <div class="two-col">
+        <div class="note">
+            <h3>Configuração principal</h3>
+            <ul>
+                <li><code>spring.datasource.url</code> configurável por variável de ambiente</li>
+                <li><code>spring.jpa.hibernate.ddl-auto=none</code></li>
+                <li><code>spring.sql.init.mode=always</code></li>
+                <li>driver PostgreSQL configurado no projeto</li>
+            </ul>
+        </div>
+        <div class="note">
+            <h3>Banco dos testes</h3>
+            <ul>
+                <li>PostgreSQL via Testcontainers</li>
+                <li><code>ddl-auto=create-drop</code> para isolamento</li>
+                <li>sem reutilização do banco principal</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3>8.1 Tabela existente no estado atual</h3>
+    <table class="tight small">
+        <thead>
+        <tr>
+            <th>Coluna</th>
+            <th>Tipo</th>
+            <th>Restrições</th>
+            <th>Origem no domínio</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr><td><code>id</code></td><td>BIGSERIAL</td><td>PRIMARY KEY</td><td><code>Usuario.id</code></td></tr>
+        <tr><td><code>nome</code></td><td>VARCHAR(120)</td><td>NOT NULL</td><td><code>Usuario.nome</code></td></tr>
+        <tr><td><code>email</code></td><td>VARCHAR(150)</td><td>NOT NULL, UNIQUE</td><td><code>Usuario.email</code></td></tr>
+        <tr><td><code>login</code></td><td>VARCHAR(50)</td><td>NOT NULL, UNIQUE</td><td><code>Usuario.login</code></td></tr>
+        <tr><td><code>senha</code></td><td>VARCHAR(255)</td><td>NOT NULL</td><td><code>Usuario.senha</code></td></tr>
+        <tr><td><code>data_ultima_alteracao</code></td><td>TIMESTAMP</td><td>NOT NULL</td><td><code>Usuario.dataUltimaAlteracao</code></td></tr>
+        <tr><td><code>rua</code></td><td>VARCHAR(150)</td><td>NOT NULL</td><td><code>Endereco.rua</code></td></tr>
+        <tr><td><code>numero</code></td><td>VARCHAR(20)</td><td>NOT NULL</td><td><code>Endereco.numero</code></td></tr>
+        <tr><td><code>complemento</code></td><td>VARCHAR(120)</td><td>NULL</td><td><code>Endereco.complemento</code></td></tr>
+        <tr><td><code>cidade</code></td><td>VARCHAR(100)</td><td>NOT NULL</td><td><code>Endereco.cidade</code></td></tr>
+        <tr><td><code>cep</code></td><td>VARCHAR(10)</td><td>NOT NULL</td><td><code>Endereco.cep</code></td></tr>
+        <tr><td><code>tipo_usuario</code></td><td>VARCHAR(20)</td><td>NOT NULL, CHECK</td><td><code>Usuario.tipoUsuario</code></td></tr>
+        </tbody>
+    </table>
+
+    <h3>8.2 Script DDL atual</h3>
+    <pre>CREATE TABLE IF NOT EXISTS usuarios (
+    id BIGSERIAL PRIMARY KEY,
+    nome VARCHAR(120) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    login VARCHAR(50) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    data_ultima_alteracao TIMESTAMP NOT NULL,
+    rua VARCHAR(150) NOT NULL,
+    numero VARCHAR(20) NOT NULL,
+    complemento VARCHAR(120),
+    cidade VARCHAR(100) NOT NULL,
+    cep VARCHAR(10) NOT NULL,
+    tipo_usuario VARCHAR(20) NOT NULL,
+    CONSTRAINT uk_usuario_email UNIQUE (email),
+    CONSTRAINT uk_usuario_login UNIQUE (login),
+    CONSTRAINT ck_usuario_tipo_usuario CHECK (tipo_usuario IN ('CLIENTE', 'DONO_RESTAURANTE'))
+);</pre>
+</section>
+
+<section class="page-break">
+    <h2>9. Execução com Docker Compose</h2>
+    <p>
+        A aplicação pode ser executada integralmente com Docker Compose, subindo tanto o backend quanto o banco de dados.
+        O arquivo entregue para isso é <code>docker-compose.yml</code>.
+    </p>
+
+    <h3>9.1 Serviços orquestrados</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Serviço</th>
+            <th>Função</th>
+            <th>Configurações relevantes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><code>postgres</code></td>
+            <td>Banco de dados relacional</td>
+            <td>imagem <code>postgres:16-alpine</code>, volume persistente, healthcheck, porta host <code>5433</code></td>
+        </tr>
+        <tr>
+            <td><code>app</code></td>
+            <td>Aplicação Spring Boot</td>
+            <td>build por <code>Dockerfile</code>, depende do banco saudável, porta host <code>8080</code></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>9.2 Variáveis de ambiente do Compose</h3>
+    <pre># Serviço postgres
+POSTGRES_DB=restaurant_system
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+
+# Serviço app
+DATABASE_URL=jdbc:postgresql://postgres:5432/restaurant_system
+DATABASE_USERNAME=postgres
+DATABASE_PASSWORD=postgres</pre>
+
+    <h3>9.3 Trecho do docker-compose.yml</h3>
+    <pre>services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: restaurant_system
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/restaurant_system
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
+    ports:
+      - "8080:8080"</pre>
+
+    <h3>9.4 Passo a passo de execução</h3>
+    <p>
+        Abaixo está o procedimento completo para executar o backend com Docker Compose do zero, incluindo
+        preparação do ambiente, subida da stack, verificação dos serviços e encerramento.
+    </p>
+
+    <h4>Passo 1. Garantir os pré-requisitos locais</h4>
+    <p>Antes de iniciar, a máquina precisa atender aos seguintes requisitos:</p>
+    <ul>
+        <li>Docker instalado e em execução</li>
+        <li>Docker Compose habilitado no comando <code>docker compose</code></li>
+        <li>porta <code>8080</code> livre para a aplicação</li>
+        <li>porta <code>5433</code> livre para o PostgreSQL exposto no host</li>
+    </ul>
+
+    <p>Comandos úteis para validação:</p>
+    <pre>docker --version
+docker compose version
+ss -ltn | grep ':8080\|:5433'</pre>
+
+    <h4>Passo 2. Clonar ou abrir o projeto</h4>
+    <p>
+        O usuário deve trabalhar na raiz do repositório, onde estão localizados o <code>Dockerfile</code>
+        e o <code>docker-compose.yml</code>.
+    </p>
+
+    <pre>git clone https://github.com/fabriciocsantos/Restaurant-System.git
+cd Restaurant-System</pre>
+
+    <p>Se o projeto já estiver clonado, basta acessar a pasta raiz:</p>
+    <pre>cd /caminho/do/projeto/Restaurant-System</pre>
+
+    <h4>Passo 3. Conferir os arquivos de orquestração</h4>
+    <p>
+        Nesta etapa, o Compose sobe dois serviços: o banco PostgreSQL e a aplicação Spring Boot.
+        Não há necessidade de criar arquivo <code>.env</code>, porque as variáveis já estão declaradas
+        diretamente no <code>docker-compose.yml</code>.
+    </p>
+
+    <pre>ls -lh Dockerfile docker-compose.yml
+docker compose config</pre>
+
+    <p>Espera-se que o comando <code>docker compose config</code> consolide a configuração sem erro.</p>
+
+    <h4>Passo 4. Construir a imagem da aplicação</h4>
+    <p>
+        O serviço <code>app</code> é construído a partir do <code>Dockerfile</code>. O build compila o projeto com Maven,
+        gera o JAR e depois monta a imagem final com Java 21 JRE.
+    </p>
+
+    <pre>docker compose build</pre>
+
+    <p>
+        Esse passo pode demorar mais na primeira execução, porque o Docker precisa baixar as imagens-base e
+        resolver as dependências do Maven.
+    </p>
+
+    <h4>Passo 5. Subir a stack completa</h4>
+    <p>
+        Após o build, deve-se subir os dois serviços. O Compose iniciará primeiro o PostgreSQL e só depois
+        a aplicação, respeitando o healthcheck configurado para o banco.
+    </p>
+
+    <pre>docker compose up -d</pre>
+
+    <p>Se o usuário quiser acompanhar toda a subida em primeiro plano, pode usar:</p>
+    <pre>docker compose up --build</pre>
+
+    <h4>Passo 6. Acompanhar o estado dos containers</h4>
+    <p>
+        Depois da subida, o próximo passo é verificar se os containers ficaram em execução e se o banco foi
+        considerado saudável.
+    </p>
+
+    <pre>docker compose ps
+docker compose logs postgres
+docker compose logs app</pre>
+
+    <p>O cenário esperado é:</p>
+    <ul>
+        <li>serviço <code>postgres</code> em execução e saudável</li>
+        <li>serviço <code>app</code> em execução na porta <code>8080</code></li>
+        <li>logs da aplicação contendo a inicialização completa do Spring Boot</li>
+    </ul>
+
+    <h4>Passo 7. Validar o acesso à aplicação</h4>
+    <p>
+        Com os serviços no ar, o backend pode ser validado por navegador, terminal, Swagger UI ou Postman.
+    </p>
+
+    <pre>curl http://localhost:8080/api/v1/usuarios
+curl http://localhost:8080/v3/api-docs</pre>
+
+    <p>Endereços úteis para conferência manual:</p>
+    <ul>
+        <li>API: <code>http://localhost:8080</code></li>
+        <li>Swagger UI: <code>http://localhost:8080/swagger-ui.html</code></li>
+        <li>OpenAPI JSON: <code>http://localhost:8080/v3/api-docs</code></li>
+    </ul>
+
+    <h4>Passo 8. Validar a conexão com o banco containerizado</h4>
+    <p>
+        Como o PostgreSQL do Compose é exposto em <code>5433</code> no host, ele pode ser acessado por ferramentas
+        externas como DBeaver sem conflitar com um PostgreSQL local rodando em <code>5432</code>.
+    </p>
+
+    <pre>Host: localhost
+Porta: 5433
+Database: restaurant_system
+Username: postgres
+Password: postgres</pre>
+
+    <p>
+        Após a aplicação iniciar, a estrutura principal deve existir no banco, com a tabela <code>usuarios</code>
+        criada a partir do arquivo <code>src/main/resources/schema.sql</code>.
+    </p>
+
+    <h4>Passo 9. Encerrar a execução</h4>
+    <p>
+        Quando o uso terminar, a stack pode ser derrubada preservando os dados do volume. Se houver necessidade
+        de apagar também o volume persistente, existe um comando específico para isso.
+    </p>
+
+    <pre>docker compose down</pre>
+
+    <p>Remoção completa da stack, incluindo o volume do PostgreSQL:</p>
+    <pre>docker compose down -v</pre>
+
+    <h3>9.5 Evidências de uso após a subida</h3>
+    <table class="tight">
+        <thead>
+        <tr>
+            <th>Recurso</th>
+            <th>Endereço</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Aplicação</td>
+            <td><code>http://localhost:8080</code></td>
+        </tr>
+        <tr>
+            <td>Swagger UI</td>
+            <td><code>http://localhost:8080/swagger-ui.html</code></td>
+        </tr>
+        <tr>
+            <td>OpenAPI JSON</td>
+            <td><code>http://localhost:8080/v3/api-docs</code></td>
+        </tr>
+        <tr>
+            <td>Banco PostgreSQL no host</td>
+            <td><code>localhost:5433</code></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>9.6 Exemplo de verificação por linha de comando</h3>
+    <pre>curl http://localhost:8080/api/v1/usuarios</pre>
+
+    <h3>9.7 Encerramento da stack</h3>
+    <pre>docker compose down</pre>
+</section>
+
+<section>
+    <h2>10. Checklist de aderência ao entregável</h2>
+    <table class="checklist">
+        <thead>
+        <tr>
+            <th>Exigência do relatório</th>
+            <th>Cobertura neste PDF</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Descrição detalhada da arquitetura</td>
+            <td>Seção 2, com tabela de camadas e diagrama de fluxo</td>
+        </tr>
+        <tr>
+            <td>Modelagem das entidades e relacionamentos</td>
+            <td>Seção 3, com diagrama de domínio e tabelas dos campos</td>
+        </tr>
+        <tr>
+            <td>Descrição dos endpoints com exemplos</td>
+            <td>Seção 4, com matriz de endpoints e blocos de request/response</td>
+        </tr>
+        <tr>
+            <td>Swagger com prints ou trechos</td>
+            <td>Seção 6, com captura real do Swagger UI e trechos de configuração e saída OpenAPI</td>
+        </tr>
+        <tr>
+            <td>Postman com prints e exemplos</td>
+            <td>Seção 7, com figura da coleção, cenários cobertos e exemplos de request</td>
+        </tr>
+        <tr>
+            <td>Estrutura do banco de dados</td>
+            <td>Seção 8, com tabela de colunas e DDL completo</td>
+        </tr>
+        <tr>
+            <td>Passo a passo com Docker Compose</td>
+            <td>Seção 9, com serviços, variáveis, comandos e URLs de acesso</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>
+        Com isso, o presente relatório consolida em um único PDF todas as evidências exigidas para a entrega formal
+        desta etapa do projeto.
+    </p>
+</section>
+</body>
+</html>
