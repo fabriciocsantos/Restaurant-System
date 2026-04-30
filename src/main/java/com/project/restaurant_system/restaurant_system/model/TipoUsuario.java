@@ -1,4 +1,4 @@
-package com.project.restaurant_system.restaurant_system.Model;
+package com.project.restaurant_system.restaurant_system.model;
 
 public enum TipoUsuario {
     CLIENTE,

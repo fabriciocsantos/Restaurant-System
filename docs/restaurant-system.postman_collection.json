@@ -1,0 +1,406 @@
+{
+  "info": {
+    "_postman_id": "f4eaf8e0-0e60-4e74-9fb8-2a96dc5b5157",
+    "name": "Restaurant System - Tech Challenge",
+    "description": "Colecao Postman com os principais cenarios do modulo de usuarios da API versionada em /api/v1.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "usuarioId",
+      "value": ""
+    },
+    {
+      "key": "emailUsuario",
+      "value": ""
+    },
+    {
+      "key": "emailUsuarioAtualizado",
+      "value": ""
+    },
+    {
+      "key": "loginUsuario",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Cadastro de usuario valido",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var unique = Date.now();",
+                  "pm.collectionVariables.set('emailUsuario', 'maria.' + unique + '@restaurante.com');",
+                  "pm.collectionVariables.set('emailUsuarioAtualizado', 'maria.atualizada.' + unique + '@restaurante.com');",
+                  "pm.collectionVariables.set('loginUsuario', 'maria.' + unique);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "var body = pm.response.json();",
+                  "if (body.id) {",
+                  "    pm.collectionVariables.set('usuarioId', body.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Maria Oliveira\",\n  \"email\": \"{{emailUsuario}}\",\n  \"login\": \"{{loginUsuario}}\",\n  \"senha\": \"SenhaSegura123\",\n  \"tipoUsuario\": \"DONO_RESTAURANTE\",\n  \"endereco\": {\n    \"rua\": \"Rua das Flores\",\n    \"numero\": \"120\",\n    \"complemento\": \"Sala 2\",\n    \"cidade\": \"Sao Paulo\",\n    \"cep\": \"01001-000\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios"
+              ]
+            },
+            "description": "Cria um usuario valido e salva o id retornado na variavel de colecao usuarioId."
+          },
+          "response": []
+        },
+        {
+          "name": "Cadastro invalido - e-mail duplicado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Joao Duplicado\",\n  \"email\": \"{{emailUsuario}}\",\n  \"login\": \"{{loginUsuario}}.duplicado\",\n  \"senha\": \"SenhaSegura123\",\n  \"tipoUsuario\": \"CLIENTE\",\n  \"endereco\": {\n    \"rua\": \"Rua A\",\n    \"numero\": \"10\",\n    \"cidade\": \"Campinas\",\n    \"cep\": \"13000-000\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios"
+              ]
+            },
+            "description": "Executar apos o cadastro valido para validar o erro de e-mail duplicado."
+          },
+          "response": []
+        },
+        {
+          "name": "Cadastro invalido - campos obrigatorios faltando",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"\",\n  \"email\": \"\",\n  \"login\": \"\",\n  \"senha\": \"123\",\n  \"tipoUsuario\": null,\n  \"endereco\": {\n    \"rua\": \"\",\n    \"numero\": \"\",\n    \"cidade\": \"\",\n    \"cep\": \"\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios"
+              ]
+            },
+            "description": "Valida os erros de obrigatoriedade e formato dos campos de entrada."
+          },
+          "response": []
+        },
+        {
+          "name": "Validacao de login - sucesso",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"login\": \"{{loginUsuario}}\",\n  \"senha\": \"SenhaSegura123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "login"
+              ]
+            },
+            "description": "Valida login e senha corretos do usuario criado."
+          },
+          "response": []
+        },
+        {
+          "name": "Validacao de login - erro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"login\": \"{{loginUsuario}}\",\n  \"senha\": \"SenhaErrada999\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "login"
+              ]
+            },
+            "description": "Valida o retorno de credenciais invalidas."
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizacao de dados - sucesso",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Maria Oliveira Atualizada\",\n  \"email\": \"{{emailUsuarioAtualizado}}\",\n  \"login\": \"{{loginUsuario}}\",\n  \"tipoUsuario\": \"DONO_RESTAURANTE\",\n  \"endereco\": {\n    \"rua\": \"Avenida Central\",\n    \"numero\": \"500\",\n    \"complemento\": \"Conjunto 10\",\n    \"cidade\": \"Sao Paulo\",\n    \"cep\": \"04567-000\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/{{usuarioId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "{{usuarioId}}"
+              ]
+            },
+            "description": "Atualiza os dados cadastrais do usuario criado."
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizacao de dados - erro",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"\",\n  \"email\": \"email-invalido\",\n  \"login\": \"{{loginUsuario}}\",\n  \"tipoUsuario\": \"DONO_RESTAURANTE\",\n  \"endereco\": {\n    \"rua\": \"\",\n    \"numero\": \"\",\n    \"cidade\": \"\",\n    \"cep\": \"\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/{{usuarioId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "{{usuarioId}}"
+              ]
+            },
+            "description": "Exercita o endpoint de atualizacao com dados invalidos."
+          },
+          "response": []
+        },
+        {
+          "name": "Busca de usuarios por nome",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios?nome=Maria",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "Maria"
+                }
+              ]
+            },
+            "description": "Busca usuarios por parte do nome."
+          },
+          "response": []
+        },
+        {
+          "name": "Alteracao de senha - sucesso",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"novaSenha\": \"NovaSenha456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/{{usuarioId}}/senha",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "{{usuarioId}}",
+                "senha"
+              ]
+            },
+            "description": "Atualiza a senha do usuario em endpoint exclusivo."
+          },
+          "response": []
+        },
+        {
+          "name": "Alteracao de senha - erro",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"novaSenha\": \"123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/{{usuarioId}}/senha",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "{{usuarioId}}",
+                "senha"
+              ]
+            },
+            "description": "Exercita o erro de validacao do endpoint exclusivo de senha."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
